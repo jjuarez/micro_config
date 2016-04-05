@@ -30,6 +30,7 @@ require 'micro_config'
 MicroConfig.configure do |config|
   config.key         = 'My value'
   config.another_key = 'Another value'
+  #...
 end
 	
 # Test these keys
@@ -43,20 +44,18 @@ MicroConfig.key = 'The new value'
 MicroConfig.super_complex_config = Struct.new('Person', :name, :type) 
 ```
 
-#### Configure your appication from a hash
+#### Configure your appication from a hash
 ```ruby
 require 'micro_config'
 	
-# Configure a bunch of keys in a block
 MicroConfig.configure(key: "Value", another_key: 'Other value')
 ```
 #### Configure your appication from a file
 ```ruby
 require 'micro_config'
 	
-# Configure a bunch of keys in a block
 MicroConfig.configure('/opt/my_app/config/application.yaml')
-# You can use the form of... you know
+# and you can use the form of... you know
 MicroConfig.configure('/opt/my_app/config/application.yaml', environment: :production)
 ```
 ## Development
@@ -73,4 +72,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/jjuare
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
