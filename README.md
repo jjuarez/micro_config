@@ -22,7 +22,44 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+#### Configure your application from a block
+	``ruby
+	require 'micro_config'
+	
+	# Configure a bunch of keys in a block
+	MicroConfig.configure do |config|
+	  config.key         = 'My value'
+	  config.another_key = 'Another value'
+	  ...
+	end
+	
+	# Test these keys
+	MicroConfig.key?
+	MicroConfig.this_not_exist?
+	
+	# Set new values for your keys
+	MicroConfig.key = 'The new value'
+	
+	# Of course, complex values are allowed
+	MicroConfig.super_complex_config =
+	  Struct.new('Person', :name, :type) 
+	```
+#### Configure your appication from a hash
+	```ruby
+	require 'micro_config'
+	
+	# Configure a bunch of keys in a block
+	MicroConfig.configure(key: "Value", another_key: 'Other value') 
+	...	
+	```
+#### Configure your appication from a file
+	```ruby
+	require 'micro_config'
+	
+	# Configure a bunch of keys in a block
+	MicroConfig.configure('/opt/my_app/config/application.yaml') 
+	...	
+	```
 
 ## Development
 
