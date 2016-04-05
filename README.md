@@ -1,8 +1,6 @@
 # MicroConfig
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/micro_config`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+The purpose of the little gem is to provide a basic way to support YAML configuration in standalone applications
 
 ## Installation
 
@@ -22,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-#### Configure your application from a block
+#### Configure your application from a block
 ```ruby
 require 'micro_config'
 	
@@ -50,7 +48,7 @@ require 'micro_config'
 	
 MicroConfig.configure(key: "Value", another_key: 'Other value')
 ```
-#### Configure your appication from a file
+#### Configure your appication from a file
 ```ruby
 require 'micro_config'
 	
