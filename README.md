@@ -23,43 +23,42 @@ Or install it yourself as:
 ## Usage
 
 #### Configure your application from a block
-	```ruby
-	require 'micro_config'
+```ruby
+require 'micro_config'
 	
-	# Configure a bunch of keys in a block
-	MicroConfig.configure do |config|
-	  config.key         = 'My value'
-	  config.another_key = 'Another value'
-	  ...
-	end
+# Configure a bunch of keys in a block
+MicroConfig.configure do |config|
+  config.key         = 'My value'
+  config.another_key = 'Another value'
+end
 	
-	# Test these keys
-	MicroConfig.key?
-	MicroConfig.this_not_exist?
+# Test these keys
+MicroConfig.key?
+MicroConfig.this_not_exist?
 	
-	# Set new values for your keys
-	MicroConfig.key = 'The new value'
+# Set new values for your keys
+MicroConfig.key = 'The new value'
 	
-	# Of course, complex values are allowed
-	MicroConfig.super_complex_config =
-	  Struct.new('Person', :name, :type) 
-	```
+# Of course, complex values are allowed
+MicroConfig.super_complex_config = Struct.new('Person', :name, :type) 
+```
+
 #### Configure your appication from a hash
-	```ruby
-	require 'micro_config'
+```ruby
+require 'micro_config'
 	
-	# Configure a bunch of keys in a block
-	MicroConfig.configure(key: "Value", another_key: 'Other value') 
-	...	
-	```
+# Configure a bunch of keys in a block
+MicroConfig.configure(key: "Value", another_key: 'Other value')
+```
 #### Configure your appication from a file
-	```ruby
-	require 'micro_config'
+```ruby
+require 'micro_config'
 	
-	# Configure a bunch of keys in a block
-	MicroConfig.configure('/opt/my_app/config/application.yaml') 
-	...	
-	```
+# Configure a bunch of keys in a block
+MicroConfig.configure('/opt/my_app/config/application.yaml')
+# You can use the form of... you know
+MicroConfig.configure('/opt/my_app/config/application.yaml', environment: :production)
+```
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
@@ -68,7 +67,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/micro_config. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/jjuarez/micro_config. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
