@@ -23,7 +23,7 @@ Or install it yourself as:
 ## Usage
 
 #### Configure your application from a block
-	``ruby
+	```ruby
 	require 'micro_config'
 	
 	# Configure a bunch of keys in a block
@@ -60,7 +60,6 @@ Or install it yourself as:
 	MicroConfig.configure('/opt/my_app/config/application.yaml') 
 	...	
 	```
-
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
