@@ -6,81 +6,81 @@ require 'yaml'
 module MicroConfig
   extend self
 
-  @@config = {}
+  @config = {}
 
-  def to_h
-    @@config
+  def symbolize(object)
+    case object
+    when Hash
+      object.inject({}) do |memo, (k, v)|
+        memo.tap { |m| m[k.to_sym] = symbolize(v) }
+      end
+    when Array
+      object.map { |v| symbolize(v) }
+    else
+      object
+    end
   end
 
-  def [](key, default = nil)
-    @@config.keys.include?(key) ? @@config[key] : default
+  def to_h
+    @config
+  end
+
+  def [](key)
+    @config[key]
+  end
+
+  def []=(key, value)
+    @config[key.to_sym] = symbolize(value)
   end
 
   def fetch(key, default = nil)
-    @@config.keys.include?(key) ? @@config[key] : default
+    @config.fetch(key, default)
   end
 
-  def configure(source = nil, options = {}, &block)
+  def configure(source = nil, options = {}, &_block)
     if options[:environment]
       case source
-      when /\.(yml|yaml)/i then @@config.merge!(YAML.load(IO.read(source))[options[:environment]])
-      when Hash            then @@config.merge!(source[options[:environment]])
+      when /\.(yml|yaml)$/i
+        file_config        = YAML.load_file(source)
+        environment_config = file_config.fetch(options[:environment].to_s)
+
+        @config.merge!(symbolize(environment_config))
+      when Hash
+        hash_config = source.fetch(options[:environment].to_s)
+
+        @config.merge!(symbolize(hash_config))
       else
         yield self if block_given?
       end
     else
       case source
-      when /\.(yml|yaml)/i then @@config.merge!(YAML.load(IO.read(source)))
-      when Hash            then @@config.merge!(source)
+      when /\.(yml|yaml)$/i
+        @config.merge!(symbolize(YAML.load_file(source)))
+      when Hash
+        @config.merge!(symbolize(source))
       else
         yield self if block_given?
       end
     end
-
-    @@config
-  rescue
-    raise("Problems loading config source: #{source}")
+  rescue => ce
+    raise("Problems loading config source: #{source}: (#{ce.message})")
   end
 
-  def configure!(source = nil, options = {}, &block)
-    if options[:environment]
-      case source
-      when /\.(yml|yaml)/i then @@config = YAML.load(IO.read(source))[options[:environment]]
-      when Hash            then @@config = source[options[:environment]]
-      else
-        yield self if block_given?
-      end
+  def method_missing(method, *arguments, &_block)
+    clean_method = method.to_s
+
+    case clean_method
+    when /(.+)=$/
+      key          = clean_method.delete('=').to_sym
+      @config[key] = arguments.size == 1 ? arguments[0] : arguments
+    when /(.+)\?$/
+      key = clean_method.delete('?').to_sym
+
+      @config.keys.include?(key)
     else
-      case source
-      when /\.(yml|yaml)/i then @@config = YAML.load(IO.read(source))
-      when Hash            then @@config = source
-      else
-        yield self if block_given?
-      end
-    end
+      key = clean_method.to_sym
 
-    @@config
-  rescue
-    raise("Problems loading config source: #{source}")
-  end
-
-  def method_missing(method, *arguments, &block)
-    case method.to_s
-    when /(.+)=$/  then
-      key          = method.to_s.delete('=')
-      @@config[key] = arguments.size == 1 ? arguments[0] : arguments
-    when /(.+)\?$/ then
-      key = method.to_s.delete('?')
-
-      @@config.keys.include?(key)
-    else
-      key = method.to_s
-
-      if @@config.keys.include?(key)
-        @@config[key]
-      else
-        super
-      end
+      @config.fetch(key)
     end
   end
 end

@@ -1,0 +1,11 @@
+---
+  development:
+    key: 'development value'
+    another_key: 'development another value'
+  test:
+    key: 'test value'
+    another_key: 'test onother value'
+  production:
+    key: 'production value'
+    another_key: 'production onother value'
+...
