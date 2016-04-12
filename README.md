@@ -1,6 +1,6 @@
 # MicroConfig
 
-The purpose of the little gem is to provide a basic way to support YAML configuration in standalone applications
+The purpose of the tiny gem is to provide a basic way to support YAML configuration in standalone applications
 
 ## Installation
 
